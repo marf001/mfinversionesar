@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MF Inversiones – Inversiones y Finanzas</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #0d1340;
+    --navy-light: #131a52;
+    --navy-mid: #1a2260;
+    --gold: #c9972a;
+    --gold-light: #e8b84b;
+    --gold-bright: #f5d06e;
+    --gold-dim: #8a6520;
+    --white: #f0eadc;
+    --text-muted: #9a8c70;
+    --card-bg: rgba(19,26,82,0.7);
+    --border: rgba(201,151,42,0.25);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Raleway', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── STARFIELD BACKGROUND ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(201,151,42,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(13,19,64,0.8) 0%, transparent 50%),
+      var(--navy);
+    pointer-events: none;
+  }
+  .stars {
+    position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+  }
+  .star {
+    position: absolute; border-radius: 50%;
+    background: rgba(201,151,42,0.5);
+    animation: twinkle var(--dur, 3s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: 0.1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+  }
+
+  /* ─── BANNER ─── */
+  .banner-wrap {
+    position: relative; z-index: 10;
+    padding: 18px 24px 0;
+  }
+  .banner-inner {
+    background: linear-gradient(105deg, #0d1340 0%, #131a52 40%, #1a1f4a 70%, #0d1340 100%);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 22px 32px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 60px rgba(201,151,42,0.08);
+  }
+  .banner-inner::after {
+    content: '';
+    position: absolute; right: 0; top: 0; bottom: 0; width: 35%;
+    background: linear-gradient(135deg, transparent 0%, rgba(201,151,42,0.07) 50%, transparent 100%);
+    border-left: 1px solid rgba(201,151,42,0.2);
+    clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+  }
+  .banner-logo-img {
+    height: 80px; width: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 12px rgba(201,151,42,0.4));
+  }
+  .banner-text h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.7rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold-bright), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: 0.05em;
+  }
+  .banner-text p {
+    font-size: 0.78rem; color: var(--text-muted);
+    font-weight: 400; letter-spacing: 0.08em;
+    margin-top: 3px; text-transform: uppercase;
+  }
+  .banner-text .url {
+    font-size: 0.72rem; color: var(--gold-dim);
+    margin-top: 6px; letter-spacing: 0.04em;
+  }
+  .banner-socials {
+    margin-left: auto; display: flex; gap: 10px;
+    align-items: center; position: relative; z-index: 1;
+  }
+  .banner-socials a {
+    width: 30px; height: 30px; border-radius: 6px;
+    background: rgba(201,151,42,0.1);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold-light); text-decoration: none; font-size: 13px;
+    transition: all 0.2s;
+  }
+  .banner-socials a:hover { background: rgba(201,151,42,0.25); transform: translateY(-2px); }
+  .app-download-btn {
+    display: inline-flex !important; align-items: center; gap: 7px;
+    padding: 8px 16px !important;
+    width: auto !important; height: auto !important;
+    background: linear-gradient(135deg, #1a6b3a, #25a244, #1a6b3a) !important;
+    background-size: 200% auto !important;
+    border: 2px solid #4ade80 !important;
+    border-radius: 10px !important;
+    color: #fff !important; font-family: 'Cinzel', serif !important;
+    font-size: 0.72rem !important; font-weight: 700 !important;
+    letter-spacing: 0.08em; white-space: nowrap;
+    animation: appGlow 2s ease-in-out infinite, appSweep 3s linear infinite !important;
+    text-decoration: none;
+  }
+  .app-dl-text { display: inline; }
+  @keyframes appGlow {
+    0%,100% { box-shadow: 0 0 10px rgba(74,222,128,0.4), 0 3px 12px rgba(0,0,0,0.4); }
+    50% { box-shadow: 0 0 28px rgba(74,222,128,0.85), 0 0 50px rgba(74,222,128,0.25); }
+  }
+  @keyframes appSweep { from { background-position: 0% center; } to { background-position: 200% center; } }
+
+  /* ─── NAVBAR TABS ─── */
+  .nav-wrap {
+    position: relative; z-index: 10;
+    padding: 16px 24px 0;
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .nav-tabs {
+    display: flex; gap: 4px;
+    background: rgba(13,19,64,0.6);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 6px;
+    backdrop-filter: blur(10px);
+  }
+  .nav-tab {
+    flex: 1; padding: 10px 16px;
+    border: none; border-radius: 7px;
+    background: transparent; color: var(--text-muted);
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.82rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.25s;
+  }
+  .nav-tab:hover { color: var(--gold-light); background: rgba(201,151,42,0.08); }
+  .nav-tab.active {
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    color: var(--navy);
+    box-shadow: 0 4px 16px rgba(201,151,42,0.3);
+  }
+
+  /* ─── PLANES ROW ─── */
+  .planes-row {
+    margin-top: 6px !important;
+    padding: 5px !important;
+    background: rgba(13,19,64,0.0) !important;
+    border: none !important;
+    border-radius: 10px !important;
+  }
+  .planes-tab {
+    flex: 1 !important;
+    background: linear-gradient(90deg, #5a3800 0%, var(--gold-dim) 20%, var(--gold) 50%, var(--gold-dim) 80%, #5a3800 100%) !important;
+    background-size: 200% auto !important;
+    color: #0d1340 !important;
+    font-family: 'Cinzel', serif !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em !important;
+    border-radius: 10px !important;
+    padding: 14px !important;
+    border: 2px solid var(--gold-bright) !important;
+    box-shadow: 0 0 0 rgba(201,151,42,0.5);
+    animation: planePulse 2s ease-in-out infinite, planeSweep 3s linear infinite !important;
+    text-transform: uppercase !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  .planes-tab::after {
+    content: '';
+    position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    animation: sheen 2.5s ease-in-out infinite;
+  }
+  .planes-tab.active {
+    background: linear-gradient(90deg, #5a3800 0%, var(--gold-dim) 20%, var(--gold) 50%, var(--gold-dim) 80%, #5a3800 100%) !important;
+    background-size: 200% auto !important;
+    color: #0d1340 !important;
+    box-shadow: 0 0 30px rgba(201,151,42,0.7), 0 0 60px rgba(201,151,42,0.3) !important;
+  }
+  @keyframes planePulse {
+    0%,100% { box-shadow: 0 0 15px rgba(201,151,42,0.4), 0 4px 20px rgba(0,0,0,0.5); }
+    50% { box-shadow: 0 0 35px rgba(201,151,42,0.8), 0 0 70px rgba(201,151,42,0.3); }
+  }
+  @keyframes planeSweep {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+  @keyframes sheen {
+    0% { left: -100%; }
+    60%,100% { left: 150%; }
+  }
+
+  /* ─── PLANES CONTENT ─── */
+  .planes-hero {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #080e2e 0%, #0d1340 40%, #1a1440 70%, #080e2e 100%);
+    border: 1px solid rgba(201,151,42,0.35);
+    border-radius: 16px; padding: 48px 32px 36px;
+    text-align: center; margin-bottom: 28px;
+  }
+  .planes-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,151,42,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .planes-hero-tag {
+    display: inline-block;
+    background: rgba(201,151,42,0.12);
+    border: 1px solid rgba(201,151,42,0.4);
+    color: var(--gold-bright); font-size: 0.7rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 5px 18px; border-radius: 20px; margin-bottom: 18px;
+    animation: fadeIn 0.6s ease;
+  }
+  .planes-hero h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 700; line-height: 1.15;
+    background: linear-gradient(135deg, #fff 0%, var(--gold-bright) 50%, var(--gold-light) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 16px;
+  }
+  .planes-hero p {
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    color: var(--text-muted); max-width: 640px;
+    margin: 0 auto 12px; line-height: 1.7;
+  }
+  .motivational-ticker {
+    margin: 20px 0 0;
+    overflow: hidden; position: relative; height: 30px;
+  }
+  .ticker-track {
+    display: flex; gap: 60px; align-items: center;
+    animation: ticker 28s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-item {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem; color: var(--gold);
+    letter-spacing: 0.1em; flex-shrink: 0;
+  }
+  .ticker-sep { color: var(--gold-dim); font-size: 0.6rem; }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* Quotes carousel */
+  .quotes-strip {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 14px;
+    margin-bottom: 28px;
+  }
+  @media(max-width:700px) { .quotes-strip { grid-template-columns: 1fr; } }
+  .quote-card {
+    background: rgba(13,19,64,0.7);
+    border: 1px solid rgba(201,151,42,0.2);
+    border-radius: 12px; padding: 20px;
+    text-align: center; position: relative;
+    overflow: hidden;
+  }
+  .quote-card::before {
+    content: '"';
+    position: absolute; top: -10px; left: 12px;
+    font-family: 'Cinzel', serif; font-size: 4rem;
+    color: rgba(201,151,42,0.1); line-height: 1;
+  }
+  .quote-text {
+    font-size: 0.82rem; color: var(--white);
+    line-height: 1.6; font-style: italic; position: relative; z-index:1;
+  }
+  .quote-author { font-size: 0.68rem; color: var(--gold-dim); margin-top: 10px; letter-spacing: 0.06em; }
+
+  /* Plans grid */
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px; margin-bottom: 28px;
+  }
+  .plan-card {
+    background: linear-gradient(160deg, rgba(13,19,64,0.95) 0%, rgba(9,14,46,0.95) 100%);
+    border-radius: 16px; padding: 28px 22px 24px;
+    position: relative; overflow: hidden;
+    transition: all 0.3s; cursor: default;
+    display: flex; flex-direction: column;
+  }
+  .plan-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--plan-color, var(--gold));
+    border-radius: 16px 16px 0 0;
+  }
+  .plan-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px var(--plan-glow, rgba(201,151,42,0.2)); }
+  .plan-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 20px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--plan-color, var(--gold));
+    margin-bottom: 12px; width: fit-content;
+  }
+  .plan-name {
+    font-family: 'Cinzel', serif; font-size: 1.25rem; font-weight: 700;
+    color: var(--plan-color, var(--gold)); margin-bottom: 6px;
+  }
+  .plan-amount {
+    font-size: 2rem; font-weight: 700;
+    color: var(--white); line-height: 1;
+    font-family: 'Cinzel', serif;
+  }
+  .plan-amount span { font-size: 1rem; color: var(--text-muted); }
+  .plan-return {
+    margin: 14px 0 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; padding: 12px;
+    text-align: center;
+  }
+  .plan-return-pct {
+    font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;
+    color: var(--plan-color, var(--gold));
+  }
+  .plan-return-label { font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+  .plan-details { list-style: none; margin: 10px 0 18px; flex: 1; }
+  .plan-details li {
+    font-size: 0.78rem; color: var(--text-muted);
+    padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .plan-details li:last-child { border-bottom: none; }
+  .plan-details li::before { content: '✓'; color: var(--plan-color, var(--gold)); font-weight: 700; font-size: 0.8rem; }
+  .plan-profit {
+    background: rgba(74,222,128,0.06);
+    border: 1px solid rgba(74,222,128,0.15);
+    border-radius: 8px; padding: 8px 12px;
+    font-size: 0.75rem; color: #4ade80; margin-bottom: 14px; text-align: center;
+  }
+
+  /* Plan colors */
+  .plan-basico   { --plan-color: #7eb8f5; --plan-glow: rgba(126,184,245,0.15); border: 1px solid rgba(126,184,245,0.2); }
+  .plan-emprendedor { --plan-color: #c9972a; --plan-glow: rgba(201,151,42,0.2); border: 1px solid rgba(201,151,42,0.3); }
+  .plan-pyme     { --plan-color: #a78bfa; --plan-glow: rgba(167,139,250,0.2); border: 1px solid rgba(167,139,250,0.3); }
+  .plan-vip      { --plan-color: #f5d06e; --plan-glow: rgba(245,208,110,0.3); border: 2px solid rgba(245,208,110,0.5);
+                   background: linear-gradient(160deg, rgba(20,17,50,0.97) 0%, rgba(13,11,38,0.97) 100%); }
+  .plan-vip .plan-name { text-shadow: 0 0 20px rgba(245,208,110,0.4); }
+  .vip-crown { position: absolute; top: 12px; right: 14px; font-size: 1.4rem; animation: crownBob 2s ease-in-out infinite; }
+  @keyframes crownBob { 0%,100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-4px) rotate(5deg); } }
+
+  /* CTA Invest Button */
+  .invest-btn-wrap { text-align: center; margin: 10px 0 0; }
+  .invest-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #128C7E, #25D366, #128C7E);
+    background-size: 200% auto;
+    border: none; border-radius: 12px;
+    color: #fff; font-family: 'Cinzel', serif;
+    font-size: 0.88rem; font-weight: 700; letter-spacing: 0.1em;
+    cursor: pointer; text-decoration: none;
+    animation: investGlow 2s ease-in-out infinite, btnSweep 3s linear infinite;
+    transition: transform 0.2s;
+  }
+  .invest-btn:hover { transform: scale(1.04); }
+  @keyframes investGlow {
+    0%,100% { box-shadow: 0 0 18px rgba(37,211,102,0.5), 0 4px 20px rgba(0,0,0,0.4); }
+    50% { box-shadow: 0 0 40px rgba(37,211,102,0.9), 0 0 80px rgba(37,211,102,0.3); }
+  }
+  @keyframes btnSweep { from { background-position: 0% center; } to { background-position: 200% center; } }
+  .invest-btn-icon { font-size: 1.2rem; }
+
+  /* How it works */
+  .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-top: 4px; }
+  .how-step {
+    background: rgba(13,19,64,0.7); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 16px; text-align: center;
+  }
+  .how-num {
+    font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700;
+    color: var(--gold); opacity: 0.3;
+  }
+  .how-icon { font-size: 1.6rem; margin: 4px 0 8px; }
+  .how-title { font-size: 0.8rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+  .how-desc { font-size: 0.72rem; color: var(--text-muted); line-height: 1.5; }
+
+  /* ─── CONTENT ─── */
+  .content {
+    position: relative; z-index: 10;
+    padding: 24px;
+  }
+  .tab-panel { display: none; animation: fadeIn 0.35s ease; }
+  .tab-panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  }
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title::before {
+    content: ''; width: 3px; height: 18px;
+    background: linear-gradient(to bottom, var(--gold-bright), var(--gold-dim));
+    border-radius: 2px;
+  }
+
+  /* ─── MERCADO ─── */
+  .market-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .coin-card {
+    background: rgba(13,19,64,0.8);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px;
+    transition: all 0.25s; cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+  .coin-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+  .coin-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .coin-card:hover::before { opacity: 1; }
+  .coin-name { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold-light); font-weight: 600; }
+  .coin-symbol { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+  .coin-price { font-size: 1.15rem; font-weight: 600; color: var(--white); margin-top: 10px; }
+  .coin-change { font-size: 0.78rem; font-weight: 600; margin-top: 4px; }
+  .coin-change.pos { color: #4ade80; }
+  .coin-change.neg { color: #f87171; }
+  .coin-volume { font-size: 0.68rem; color: var(--text-muted); margin-top: 6px; }
+  .market-status {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.72rem; color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .live-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #4ade80;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(74,222,128,0.6); } 50% { box-shadow: 0 0 0 5px rgba(74,222,128,0); } }
+  .refresh-btn {
+    margin-left: auto; background: transparent;
+    border: 1px solid var(--border); color: var(--gold-light);
+    padding: 5px 12px; border-radius: 6px; cursor: pointer;
+    font-family: 'Raleway', sans-serif; font-size: 0.72rem;
+    transition: all 0.2s;
+  }
+  .refresh-btn:hover { background: rgba(201,151,42,0.12); border-color: var(--gold); }
+  .loader { text-align: center; color: var(--text-muted); padding: 40px; font-size: 0.85rem; }
+  .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .error-msg { color: #f87171; font-size: 0.82rem; padding: 16px; text-align: center; }
+
+  /* ─── DIVISAS ─── */
+  .divisas-container { max-width: 520px; margin: 0 auto; }
+  .converter-card {
+    background: rgba(13,19,64,0.85);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px;
+    text-align: center;
+  }
+  .rate-display {
+    margin: 20px 0;
+    padding: 16px;
+    background: rgba(201,151,42,0.08);
+    border: 1px solid rgba(201,151,42,0.2);
+    border-radius: 10px;
+  }
+  .rate-display .rate-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .rate-display .rate-value { font-family: 'Cinzel', serif; font-size: 1.6rem; color: var(--gold-bright); margin-top: 4px; }
+  .conv-group { margin: 16px 0; text-align: left; }
+  .conv-group label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; display: block; }
+  .conv-input {
+    width: 100%; padding: 12px 16px;
+    background: rgba(13,19,64,0.9);
+    border: 1px solid var(--border);
+    border-radius: 8px; color: var(--white);
+    font-family: 'Raleway', sans-serif; font-size: 1.05rem;
+    transition: border-color 0.2s;
+  }
+  .conv-input:focus { outline: none; border-color: var(--gold); }
+  .conv-arrow { text-align: center; color: var(--gold); font-size: 1.4rem; margin: 8px 0; }
+  .conv-result {
+    width: 100%; padding: 12px 16px;
+    background: rgba(201,151,42,0.08);
+    border: 1px solid rgba(201,151,42,0.3);
+    border-radius: 8px; color: var(--gold-bright);
+    font-family: 'Cinzel', serif; font-size: 1.15rem;
+    text-align: center;
+  }
+  .convert-btn {
+    width: 100%; margin-top: 16px;
+    padding: 13px;
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    border: none; border-radius: 8px;
+    color: var(--navy); font-family: 'Cinzel', serif;
+    font-size: 0.9rem; font-weight: 600; letter-spacing: 0.1em;
+    cursor: pointer; transition: all 0.25s;
+  }
+  .convert-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(201,151,42,0.3); }
+  .rate-note { font-size: 0.68rem; color: var(--text-muted); margin-top: 12px; text-align: center; }
+
+  /* ─── NOTICIAS ─── */
+  .news-grid { display: flex; flex-direction: column; gap: 14px; }
+  .news-card {
+    background: rgba(13,19,64,0.8);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 20px;
+    transition: all 0.25s; text-decoration: none; color: inherit; display: block;
+  }
+  .news-card:hover { border-color: var(--gold); transform: translateX(4px); }
+  .news-source { font-size: 0.66rem; color: var(--gold-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .news-title { font-size: 0.88rem; font-weight: 600; color: var(--white); line-height: 1.4; }
+  .news-desc { font-size: 0.76rem; color: var(--text-muted); margin-top: 6px; line-height: 1.5; }
+  .news-date { font-size: 0.65rem; color: var(--text-muted); margin-top: 8px; }
+  .news-tag {
+    display: inline-block; background: rgba(201,151,42,0.12);
+    border: 1px solid rgba(201,151,42,0.25);
+    color: var(--gold-light); font-size: 0.62rem;
+    padding: 2px 7px; border-radius: 20px;
+    margin-left: 8px; vertical-align: middle;
+  }
+
+  /* ─── CONTACTO ─── */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
+  .contact-card {
+    background: rgba(13,19,64,0.8);
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px; text-align: center; transition: all 0.25s;
+    text-decoration: none; color: inherit; display: block;
+  }
+  .contact-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+  .contact-icon { font-size: 2.2rem; margin-bottom: 10px; }
+  .contact-card h3 { font-family: 'Cinzel', serif; font-size: 0.9rem; color: var(--gold-light); letter-spacing: 0.08em; }
+  .contact-card p { font-size: 0.8rem; color: var(--text-muted); margin-top: 6px; }
+  .contact-card .number { font-size: 1rem; color: var(--white); font-weight: 600; margin-top: 8px; }
+  .info-card {
+    background: rgba(13,19,64,0.8);
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px; margin-top: 16px;
+  }
+  .info-row { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(201,151,42,0.1); }
+  .info-row:last-child { border-bottom: none; }
+  .info-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+  .info-label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .info-value { font-size: 0.85rem; color: var(--white); margin-top: 2px; }
+  .wa-btn {
+    display: block; text-align: center; margin-top: 16px;
+    padding: 13px;
+    background: linear-gradient(135deg, #128C7E, #25D366);
+    border-radius: 10px; text-decoration: none;
+    color: #fff; font-family: 'Raleway', sans-serif;
+    font-weight: 600; font-size: 0.88rem; letter-spacing: 0.05em;
+    transition: all 0.25s;
+  }
+  .wa-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37,211,102,0.3); }
+  .call-btn {
+    display: block; text-align: center; margin-top: 10px;
+    padding: 13px;
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    border-radius: 10px; text-decoration: none;
+    color: var(--navy); font-family: 'Raleway', sans-serif;
+    font-weight: 600; font-size: 0.88rem; letter-spacing: 0.05em;
+    transition: all 0.25s;
+  }
+  .call-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(201,151,42,0.3); }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    position: relative; z-index: 10;
+    text-align: center; padding: 20px 24px;
+    border-top: 1px solid var(--border);
+    font-size: 0.68rem; color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+  .footer span { color: var(--gold-dim); }
+
+  /* ─── RESPONSIVE ─── */
+  @media(max-width: 600px) {
+    .banner-inner { flex-direction: column; text-align: center; gap: 14px; padding: 18px; }
+    .banner-text h1 { font-size: 1.3rem; }
+    .banner-socials { margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+    .app-dl-text { display: none; }
+    .nav-tab { font-size: 0.68rem; padding: 9px 8px; }
+    .market-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<!-- Banner -->
+<div class="banner-wrap">
+  <div class="banner-inner">
+    <img class="banner-logo-img" src="mfinversiones-logo.jpg" alt="MF Inversiones Logo"
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
+    <div style="display:none; width:80px; height:80px; border-radius:8px; background:linear-gradient(135deg,#1a2260,#0d1340); border:2px solid rgba(201,151,42,0.4); align-items:center; justify-content:center; font-family:'Cinzel',serif; font-size:1.4rem; font-weight:700; background-clip:text; color:transparent; background:linear-gradient(135deg,#e8b84b,#c9972a); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">MF</div>
+    <div class="banner-text">
+      <h1>MF Inversiones</h1>
+      <p>Inversiones y Finanzas</p>
+      <p>Construyendo tu futuro financiero</p>
+      <div class="url">www.mfinversiones.xyz</div>
+    </div>
+    <div class="banner-socials">
+      <a href="https://facebook.com/mfcryptodivisas" target="_blank" title="Facebook @mfcryptodivisas" style="width:36px;height:36px;font-size:15px;font-weight:700;">f</a>
+      <a class="app-download-btn" href="https://drive.google.com/file/d/1_Z3GGfk0UhiZxBX1yFUN9dOxpIYcVlJo/view?usp=sharing" target="_blank">
+        <span>📲</span><span class="app-dl-text">Descargar App</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('mercado')">📈 Mercado</button>
+    <button class="nav-tab" onclick="switchTab('divisas')">💱 Cambio de Divisa</button>
+    <button class="nav-tab" onclick="switchTab('noticias')">📰 Noticias</button>
+    <button class="nav-tab" onclick="switchTab('contacto')">📞 Contacto</button>
+  </div>
+  <!-- PLANES TAB – full width row below -->
+  <div class="nav-tabs planes-row">
+    <button class="nav-tab planes-tab" onclick="switchTab('planes')">💎 PLANES DE INVERSIÓN — ¡COMENZÁ HOY TU LIBERTAD FINANCIERA!</button>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+  <!-- ─── MERCADO ─── -->
+  <div class="tab-panel active" id="tab-mercado">
+    <div class="card">
+      <div class="section-title">Mercado Cripto en Vivo</div>
+      <div class="market-status">
+        <div class="live-dot"></div>
+        <span id="market-time">Actualizando…</span>
+        <button class="refresh-btn" onclick="loadMarket()">↻ Actualizar</button>
+      </div>
+      <div id="market-content">
+        <div class="loader"><span class="spinner"></span>Cargando datos de Bitget…</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px; font-size:0.72rem; color:var(--text-muted); text-align:center;">
+      Datos provistos por <a href="https://www.bitget.com" target="_blank" style="color:var(--gold-light)">Bitget.com</a> — API pública sin autenticación. Precios en USD.
+    </div>
+  </div>
+
+  <!-- ─── CAMBIO DE DIVISA ─── -->
+  <div class="tab-panel" id="tab-divisas">
+    <div class="card">
+      <div class="section-title">Cambio de Divisa</div>
+
+      <!-- Rates status bar -->
+      <div class="market-status" style="margin-bottom:18px;">
+        <div class="live-dot"></div>
+        <span id="rates-time">Cargando cotizaciones…</span>
+        <button class="refresh-btn" onclick="loadRates()">↻ Actualizar</button>
+      </div>
+
+      <!-- Rate cards grid -->
+      <div id="rate-cards" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-bottom:28px;">
+        <div class="loader"><span class="spinner"></span>Obteniendo cotizaciones en vivo…</div>
+      </div>
+
+      <!-- Converter -->
+      <div class="section-title" style="margin-top:8px;">Convertidor</div>
+      <div style="display:grid; grid-template-columns:1fr auto 1fr; gap:12px; align-items:end; margin-bottom:16px;">
+        <div class="conv-group" style="margin:0;">
+          <label>Monto</label>
+          <input class="conv-input" type="number" id="div-amount" value="1000" oninput="calcDivisas()" style="font-size:1.1rem;"/>
+        </div>
+        <div style="padding-bottom:4px; text-align:center;">
+          <div style="color:var(--text-muted); font-size:0.7rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px;">De</div>
+          <select id="div-from" onchange="calcDivisas()" style="background:rgba(13,19,64,0.9); border:1px solid var(--border); border-radius:8px; color:var(--white); padding:12px 10px; font-family:'Raleway',sans-serif; font-size:0.9rem; cursor:pointer;">
+            <option value="ARS">🇦🇷 ARS - Pesos</option>
+            <option value="USD">🇺🇸 USD - Dólar</option>
+            <option value="EUR">🇪🇺 EUR - Euro</option>
+            <option value="BRL">🇧🇷 BRL - Real</option>
+          </select>
+        </div>
+        <div style="padding-bottom:4px; text-align:center;">
+          <div style="color:var(--text-muted); font-size:0.7rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px;">A</div>
+          <select id="div-to" onchange="calcDivisas()" style="background:rgba(13,19,64,0.9); border:1px solid var(--border); border-radius:8px; color:var(--white); padding:12px 10px; font-family:'Raleway',sans-serif; font-size:0.9rem; cursor:pointer;">
+            <option value="USD">🇺🇸 USD - Dólar</option>
+            <option value="EUR">🇪🇺 EUR - Euro</option>
+            <option value="BRL">🇧🇷 BRL - Real</option>
+            <option value="ARS">🇦🇷 ARS - Pesos</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="div-result" class="rate-display" style="text-align:center; margin-bottom:8px;">
+        <div class="rate-label">Resultado</div>
+        <div class="rate-value" id="div-result-val">—</div>
+      </div>
+      <p class="rate-note">⚠️ Cotizaciones referenciales en Argentina con una diferencia del 5% sobre el tipo de cambio oficial. No constituye asesoramiento financiero.</p>
+    </div>
+  </div>
+
+  <!-- ─── NOTICIAS ─── -->
+  <div class="tab-panel" id="tab-noticias">
+    <div class="card">
+      <div class="section-title">Noticias Cripto</div>
+      <div id="news-content">
+        <div class="loader"><span class="spinner"></span>Cargando noticias…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── CONTACTO ─── -->
+  <div class="tab-panel" id="tab-contacto">
+    <div class="card">
+      <div class="section-title">Contacto</div>
+      <div class="contact-grid">
+        <a class="contact-card" href="tel:+542325418653">
+          <div class="contact-icon">📞</div>
+          <h3>Llamada Telefónica</h3>
+          <div class="number">+54 2325 418653</div>
+          <p>Toca para llamar directamente</p>
+        </a>
+        <a class="contact-card" href="https://wa.me/542325418653" target="_blank">
+          <div class="contact-icon">💬</div>
+          <h3>WhatsApp</h3>
+          <div class="number">+54 2325 418653</div>
+          <p>Enviar mensaje por WhatsApp</p>
+        </a>
+      </div>
+      <a class="wa-btn" href="https://wa.me/542325418653?text=Hola%20MF%20Inversiones%2C%20quiero%20consultar%20sobre%20sus%20servicios" target="_blank">
+        💬 Abrir WhatsApp
+      </a>
+      <a class="call-btn" href="tel:+542325418653">📞 Llamar Ahora</a>
+
+      <div class="info-card">
+        <div class="section-title" style="margin-bottom:12px;">Información de Contacto</div>
+        <div class="info-row">
+          <div class="info-icon">📍</div>
+          <div>
+            <div class="info-label">Dirección</div>
+            <div class="info-value">Juana Manso 555, Puerto Madero<br>CP C1107 · CABA, Argentina</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">👤</div>
+          <div>
+            <div class="info-label">Titular</div>
+            <div class="info-value">Martín Emmanuel Flores</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">🪪</div>
+          <div>
+            <div class="info-label">DNI</div>
+            <div class="info-value">34.364.051</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">🏢</div>
+          <div>
+            <div class="info-label">CUIT</div>
+            <div class="info-value">20-34364051-0</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">🌐</div>
+          <div>
+            <div class="info-label">Sitio web</div>
+            <div class="info-value"><a href="https://www.mfinversiones.xyz" target="_blank" style="color:var(--gold-light)">www.mfinversiones.xyz</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── PLANES DE INVERSIÓN ─── -->
+  <div class="tab-panel" id="tab-planes">
+
+    <!-- Hero motivacional -->
+    <div class="planes-hero">
+      <div class="planes-hero-tag">✦ MF Inversiones · Tu Socio Financiero ✦</div>
+      <h2>La Libertad Financiera<br>Está a Tu Alcance</h2>
+      <p>Cada gran fortuna comenzó con una decisión. Hoy es tu momento. Con nuestros planes de inversión, tu dinero trabaja para vos mientras vos vivís tu vida.</p>
+      <p style="color:var(--gold-light); font-size:0.9rem; font-weight:600;">"El mejor momento para invertir fue ayer. El segundo mejor momento es ahora."</p>
+      <div class="motivational-ticker">
+        <div class="ticker-track">
+          <span class="ticker-item">💡 Tu dinero trabaja las 24hs</span><span class="ticker-sep">◆</span>
+          <span class="ticker-item">🚀 Retornos mensuales garantizados</span><span class="ticker-sep">◆</span>
+          <span class="ticker-item">🔐 Operaciones transparentes con reportes semanales</span><span class="ticker-sep">◆</span>
+          <span class="ticker-item">🌍 Invertí desde cualquier lugar del mundo</span><span class="ticker-sep">◆</span>
+          <span class="ticker-item">💎 Planes desde u$s 500</span><span class="ticker-sep">◆</span>
+          <span class="ticker-item">📈 Ganancias que se transfieren a tu cuenta cada mes</span><span class="ticker-sep">◆</span>
+          <!-- duplicado para loop continuo -->
+          <span class="ticker-item">💡 Tu dinero trabaja las 24hs</span><span class="ticker-sep">◆</span>
+          <span class="ticker-item">🚀 Retornos mensuales garantizados</span><span class="ticker-sep">◆</span>
+          <span class="ticker-item">🔐 Operaciones transparentes con reportes semanales</span><span class="ticker-sep">◆</span>
+          <span class="ticker-item">🌍 Invertí desde cualquier lugar del mundo</span><span class="ticker-sep">◆</span>
+          <span class="ticker-item">💎 Planes desde u$s 500</span><span class="ticker-sep">◆</span>
+          <span class="ticker-item">📈 Ganancias que se transfieren a tu cuenta cada mes</span><span class="ticker-sep">◆</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frases motivacionales -->
+    <div class="quotes-strip">
+      <div class="quote-card">
+        <div class="quote-text">No trabajes para el dinero. Haz que el dinero trabaje para vos. La independencia financiera no es un lujo, es un derecho.</div>
+        <div class="quote-author">— Filosofía MF Inversiones</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">Cada peso invertido hoy es un paso hacia la vida que merecés mañana. El futuro se construye con decisiones valientes.</div>
+        <div class="quote-author">— Martin E. Flores · Fundador</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">La diferencia entre quienes logran la libertad financiera y quienes no, está en una sola palabra: acción. ¿Cuándo empezás?</div>
+        <div class="quote-author">— MF Inversiones</div>
+      </div>
+    </div>
+
+    <!-- Planes -->
+    <div class="section-title" style="margin-bottom:20px;">Nuestros Planes de Inversión</div>
+    <div class="plans-grid">
+
+      <!-- BÁSICO -->
+      <div class="plan-card plan-basico">
+        <div class="plan-badge">⭐ Starter</div>
+        <div class="plan-name">Plan Básico</div>
+        <div class="plan-amount">$500 <span>USD</span></div>
+        <div class="plan-return">
+          <div class="plan-return-pct">2%</div>
+          <div class="plan-return-label">Retorno Mensual</div>
+        </div>
+        <div class="plan-profit">📊 Ganancia mensual: <strong>$10 USD</strong> · Total 6 meses: <strong>$60 USD</strong></div>
+        <ul class="plan-details">
+          <li>Contrato de 6 meses</li>
+          <li>Reporte semanal de operaciones</li>
+          <li>Transferencia mensual de ganancias</li>
+          <li>Acceso al panel de cliente</li>
+          <li>Soporte por WhatsApp</li>
+        </ul>
+        <div class="invest-btn-wrap">
+          <a class="invest-btn" href="https://wa.me/5492325418653?text=Hola%2C%20estoy%20interesado%20en%20Invertir%20con%20MF%20Inversiones%20-%20Plan%20B%C3%A1sico%20(u%24s%20500)" target="_blank">
+            <span class="invest-btn-icon">💬</span> QUIERO INVERTIR
+          </a>
+        </div>
+      </div>
+
+      <!-- EMPRENDEDOR -->
+      <div class="plan-card plan-emprendedor">
+        <div class="plan-badge">🔥 Popular</div>
+        <div class="plan-name">Plan Emprendedor</div>
+        <div class="plan-amount">$1.000 <span>USD</span></div>
+        <div class="plan-return">
+          <div class="plan-return-pct">4%</div>
+          <div class="plan-return-label">Retorno Mensual</div>
+        </div>
+        <div class="plan-profit">📊 Ganancia mensual: <strong>$40 USD</strong> · Total 6 meses: <strong>$240 USD</strong></div>
+        <ul class="plan-details">
+          <li>Contrato de 6 meses</li>
+          <li>Reporte semanal de operaciones</li>
+          <li>Transferencia mensual de ganancias</li>
+          <li>Acceso al panel de cliente</li>
+          <li>Asesoramiento personalizado</li>
+        </ul>
+        <div class="invest-btn-wrap">
+          <a class="invest-btn" href="https://wa.me/5492325418653?text=Hola%2C%20estoy%20interesado%20en%20Invertir%20con%20MF%20Inversiones%20-%20Plan%20Emprendedor%20(u%24s%201000)" target="_blank">
+            <span class="invest-btn-icon">💬</span> QUIERO INVERTIR
+          </a>
+        </div>
+      </div>
+
+      <!-- PYME -->
+      <div class="plan-card plan-pyme">
+        <div class="plan-badge">💼 Empresarial</div>
+        <div class="plan-name">Plan PYME</div>
+        <div class="plan-amount">$2.000 <span>USD</span></div>
+        <div class="plan-return">
+          <div class="plan-return-pct">6%</div>
+          <div class="plan-return-label">Retorno Mensual</div>
+        </div>
+        <div class="plan-profit">📊 Ganancia mensual: <strong>$120 USD</strong> · Total 6 meses: <strong>$720 USD</strong></div>
+        <ul class="plan-details">
+          <li>Contrato de 6 meses</li>
+          <li>Reporte semanal de operaciones</li>
+          <li>Transferencia mensual de ganancias</li>
+          <li>Gestor de cuenta dedicado</li>
+          <li>Prioridad en soporte</li>
+        </ul>
+        <div class="invest-btn-wrap">
+          <a class="invest-btn" href="https://wa.me/5492325418653?text=Hola%2C%20estoy%20interesado%20en%20Invertir%20con%20MF%20Inversiones%20-%20Plan%20PYME%20(u%24s%202000)" target="_blank">
+            <span class="invest-btn-icon">💬</span> QUIERO INVERTIR
+          </a>
+        </div>
+      </div>
+
+      <!-- VIP -->
+      <div class="plan-card plan-vip">
+        <div class="vip-crown">👑</div>
+        <div class="plan-badge">👑 Exclusivo</div>
+        <div class="plan-name">Plan VIP</div>
+        <div class="plan-amount">$5.000 <span>USD</span></div>
+        <div class="plan-return">
+          <div class="plan-return-pct">7%</div>
+          <div class="plan-return-label">Retorno Mensual</div>
+        </div>
+        <div class="plan-profit">📊 Ganancia mensual: <strong>$350 USD</strong> · Total 6 meses: <strong>$2.100 USD</strong></div>
+        <ul class="plan-details">
+          <li>Contrato de 6 meses</li>
+          <li>Reporte semanal de operaciones</li>
+          <li>Transferencia mensual de ganancias</li>
+          <li>Acceso VIP y gestor exclusivo</li>
+          <li>Reportes detallados premium</li>
+        </ul>
+        <div class="invest-btn-wrap">
+          <a class="invest-btn" href="https://wa.me/5492325418653?text=Hola%2C%20estoy%20interesado%20en%20Invertir%20con%20MF%20Inversiones%20-%20Plan%20VIP%20(u%24s%205000)" target="_blank">
+            <span class="invest-btn-icon">💬</span> QUIERO INVERTIR
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /plans-grid -->
+
+    <!-- Cómo funciona -->
+    <div class="card" style="margin-top:8px;">
+      <div class="section-title">¿Cómo Funciona?</div>
+      <div class="how-grid">
+        <div class="how-step">
+          <div class="how-num">01</div>
+          <div class="how-icon">💬</div>
+          <div class="how-title">Elegís tu Plan</div>
+          <div class="how-desc">Contactanos por WhatsApp y elegís el plan que mejor se adapta a tus objetivos.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-num">02</div>
+          <div class="how-icon">📝</div>
+          <div class="how-title">Firmás el Contrato</div>
+          <div class="how-desc">Se formaliza un contrato por 6 meses con todos los términos y condiciones claros.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-num">03</div>
+          <div class="how-icon">💰</div>
+          <div class="how-title">Realizás el Depósito</div>
+          <div class="how-desc">Transferís el capital a la cuenta registrada y comienza a operar de inmediato.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-num">04</div>
+          <div class="how-icon">📊</div>
+          <div class="how-title">Recibís Reportes</div>
+          <div class="how-desc">Cada semana recibís un reporte detallado de operaciones y rendimiento.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-num">05</div>
+          <div class="how-icon">🏦</div>
+          <div class="how-title">Cobrás Mensual</div>
+          <div class="how-desc">Al cierre de cada mes, las ganancias se transfieren a tu cuenta registrada automáticamente.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA final -->
+    <div style="text-align:center; padding: 36px 20px 10px;">
+      <div style="font-family:'Cinzel',serif; font-size:1.3rem; color:var(--gold-bright); margin-bottom:10px;">¿Listo para empezar?</div>
+      <div style="color:var(--text-muted); font-size:0.85rem; margin-bottom:22px; max-width:500px; margin-left:auto; margin-right:auto; line-height:1.6;">No dejes que el dinero pierda valor. Hacelo crecer. Contactanos ahora y uno de nuestros asesores te guiará sin compromiso.</div>
+      <a class="invest-btn" style="font-size:1rem; padding:16px 40px;" href="https://wa.me/5492325418653?text=Hola%2C%20estoy%20interesado%20en%20Invertir%20con%20MF%20Inversiones" target="_blank">
+        <span class="invest-btn-icon">💬</span> QUIERO INVERTIR CON MF INVERSIONES
+      </a>
+      <div style="font-size:0.68rem; color:var(--text-muted); margin-top:14px;">⚠️ Toda inversión conlleva riesgos. Los rendimientos mostrados son proyecciones basadas en operaciones históricas. No constituye asesoramiento financiero.</div>
+    </div>
+
+  </div><!-- /tab-planes -->
+
+</div><!-- /content -->
+
+<div class="footer">
+  <span>MF Inversiones</span> — Inversiones y Finanzas · CUIT 20-34364051-0 · www.mfinversiones.xyz<br>
+  <span>⚠️ Contenido de carácter informativo. No constituye asesoramiento financiero.</span>
+</div>
+
+<script>
+// ─── STARS ───
+(function(){
+  const c = document.getElementById('stars');
+  for(let i=0;i<60;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random()*2.5+1;
+    s.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--dur:${(Math.random()*4+2).toFixed(1)}s;--delay:${(Math.random()*4).toFixed(1)}s`;
+    c.appendChild(s);
+  }
+})();
+
+// ─── TABS ───
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if(name==='mercado' && !window._marketLoaded) loadMarket();
+  if(name==='noticias' && !window._newsLoaded) loadNews();
+}
+
+// ─── MARKET ───
+const PAIRS = ['BTCUSDT','ETHUSDT','BNBUSDT','SOLUSDT','XRPUSDT','ADAUSDT','DOGEUSDT','AVAXUSDT','DOTUSDT','LINKUSDT','MATICUSDT','LTCUSDT'];
+const PAIR_NAMES = {BTCUSDT:'Bitcoin',ETHUSDT:'Ethereum',BNBUSDT:'BNB',SOLUSDT:'Solana',XRPUSDT:'XRP',ADAUSDT:'Cardano',DOGEUSDT:'Dogecoin',AVAXUSDT:'Avalanche',DOTUSDT:'Polkadot',LINKUSDT:'Chainlink',MATICUSDT:'Polygon',LTCUSDT:'Litecoin'};
+
+async function loadMarket() {
+  const el = document.getElementById('market-content');
+  const timeEl = document.getElementById('market-time');
+  el.innerHTML = '<div class="loader"><span class="spinner"></span>Cargando datos de Bitget…</div>';
+
+  try {
+    const promises = PAIRS.map(sym =>
+      fetch(`https://api.bitget.com/api/v2/spot/market/tickers?symbol=${sym}`)
+        .then(r => r.json())
+        .catch(() => null)
+    );
+    const results = await Promise.all(promises);
+    const coins = [];
+    results.forEach((data, i) => {
+      if (!data || data.code !== '00000' || !data.data || !data.data[0]) return;
+      const d = data.data[0];
+      coins.push({
+        symbol: PAIRS[i],
+        name: PAIR_NAMES[PAIRS[i]] || PAIRS[i],
+        price: parseFloat(d.lastPr || d.close || 0),
+        change: parseFloat(d.change24h || d.chgUtc0 || 0),
+        volume: parseFloat(d.quoteVolume || d.baseVolume || 0)
+      });
+    });
+
+    if(coins.length === 0) throw new Error('Sin datos');
+
+    const now = new Date();
+    timeEl.textContent = `Última actualización: ${now.toLocaleTimeString('es-AR')}`;
+
+    el.innerHTML = `<div class="market-grid">${coins.map(c => {
+      const chgPct = (c.change * 100).toFixed(2);
+      const isPos = c.change >= 0;
+      const price = c.price >= 1 
+        ? c.price.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})
+        : c.price.toFixed(6);
+      const vol = c.volume >= 1e9 ? (c.volume/1e9).toFixed(2)+'B' : c.volume >= 1e6 ? (c.volume/1e6).toFixed(1)+'M' : c.volume.toFixed(0);
+      return `<div class="coin-card">
+        <div class="coin-name">${c.name}</div>
+        <div class="coin-symbol">${c.symbol.replace('USDT','')}/USDT</div>
+        <div class="coin-price">$${price}</div>
+        <div class="coin-change ${isPos?'pos':'neg'}">${isPos?'▲':'▼'} ${Math.abs(chgPct)}%</div>
+        <div class="coin-volume">Vol: $${vol}</div>
+      </div>`;
+    }).join('')}</div>`;
+
+    window._marketLoaded = true;
+  } catch(e) {
+    timeEl.textContent = 'Error al cargar';
+    el.innerHTML = '<div class="error-msg">⚠️ No se pudo conectar con la API de Bitget. Verifique su conexión o intente nuevamente.</div>';
+  }
+}
+
+// ─── EXCHANGE RATES (live + 5% spread) ───
+// Rates stored as ARS per 1 unit of foreign currency
+let RATES = { USD: 1600, EUR: 1760, BRL: 310 }; // fallback values
+
+const RATE_META = {
+  USD: { name:'Dólar Estadounidense', flag:'🇺🇸', symbol:'$' },
+  EUR: { name:'Euro',                 flag:'🇪🇺', symbol:'€' },
+  BRL: { name:'Real Brasileño',       flag:'🇧🇷', symbol:'R$' },
+  ARS: { name:'Peso Argentino',       flag:'🇦🇷', symbol:'$' }
+};
+
+async function loadRates() {
+  const timeEl = document.getElementById('rates-time');
+  const cardsEl = document.getElementById('rate-cards');
+  try {
+    // exchangerate.host is free, no key needed
+    const r = await fetch('https://api.exchangerate.host/live?access_key=&source=ARS&currencies=USD,EUR,BRL&format=1');
+    const d = await r.json();
+    let gotData = false;
+    if (d && d.quotes) {
+      // quotes are ARS→X (e.g. ARSUSD), so invert to get X per ARS, then invert again for ARS per X
+      if (d.quotes['ARSUSD']) { RATES.USD = parseFloat((1 / d.quotes['ARSUSD']).toFixed(2)); gotData = true; }
+      if (d.quotes['ARSEUR']) { RATES.EUR = parseFloat((1 / d.quotes['ARSEUR']).toFixed(2)); gotData = true; }
+      if (d.quotes['ARSBRL']) { RATES.BRL = parseFloat((1 / d.quotes['ARSBRL']).toFixed(2)); gotData = true; }
+    }
+    if (!gotData) throw new Error('no data');
+  } catch(e) {
+    // Try fallback: open.er-api.com (completely free)
+    try {
+      const r2 = await fetch('https://open.er-api.com/v6/latest/USD');
+      const d2 = await r2.json();
+      if (d2 && d2.rates) {
+        const arsPerUsd = d2.rates['ARS'] || 1600;
+        RATES.USD = arsPerUsd;
+        RATES.EUR = arsPerUsd / (d2.rates['EUR'] || 0.92);
+        RATES.BRL = arsPerUsd / (d2.rates['BRL'] || 5.1);
+      }
+    } catch(e2) { /* use fallback */ }
+  }
+
+  // Apply 5% spread on top
+  const SPREAD = 1.05;
+  const display = {
+    USD: +(RATES.USD * SPREAD).toFixed(2),
+    EUR: +(RATES.EUR * SPREAD).toFixed(2),
+    BRL: +(RATES.BRL * SPREAD).toFixed(2)
+  };
+  // Store display rates for converter
+  window._displayRates = display;
+
+  const now = new Date();
+  document.getElementById('rates-time').textContent = `Actualizado: ${now.toLocaleTimeString('es-AR')} (incluye diferencial del 5%)`;
+
+  document.getElementById('rate-cards').innerHTML = [
+    { code:'USD', ars: display.USD },
+    { code:'EUR', ars: display.EUR },
+    { code:'BRL', ars: display.BRL }
+  ].map(c => {
+    const m = RATE_META[c.code];
+    return `<div style="background:rgba(13,19,64,0.85); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; transition:all .25s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:2rem; margin-bottom:6px;">${m.flag}</div>
+      <div style="font-family:'Cinzel',serif; font-size:0.85rem; color:var(--gold-light); letter-spacing:.08em; margin-bottom:4px;">${m.name}</div>
+      <div style="font-size:0.7rem; color:var(--text-muted); margin-bottom:10px; text-transform:uppercase;">${c.code}</div>
+      <div style="font-family:'Cinzel',serif; font-size:1.5rem; color:var(--white); font-weight:700;">$${c.ars.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
+      <div style="font-size:0.68rem; color:var(--text-muted); margin-top:4px;">ARS por 1 ${c.code}</div>
+    </div>`;
+  }).join('');
+
+  calcDivisas();
+}
+
+function calcDivisas() {
+  const dr = window._displayRates || { USD:1680, EUR:1848, BRL:325 };
+  const amount = parseFloat(document.getElementById('div-amount').value) || 0;
+  const from = document.getElementById('div-from').value;
+  const to = document.getElementById('div-to').value;
+  const resEl = document.getElementById('div-result-val');
+
+  // Convert everything through ARS
+  function toARS(val, cur) {
+    if (cur === 'ARS') return val;
+    return val * (dr[cur] || 1);
+  }
+  function fromARS(val, cur) {
+    if (cur === 'ARS') return val;
+    return val / (dr[cur] || 1);
+  }
+
+  const inARS = toARS(amount, from);
+  const result = fromARS(inARS, to);
+
+  const fmt = (n, cur) => {
+    const sym = RATE_META[cur].symbol;
+    return `${sym}${n.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2})} ${cur}`;
+  };
+  resEl.textContent = `${fmt(amount,from)} = ${fmt(result,to)}`;
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadRates();
+  loadMarket();
+  setInterval(loadMarket, 60000);
+  setInterval(loadRates, 300000); // refresh rates every 5 min
+});
+async function loadNews() {
+  const el = document.getElementById('news-content');
+  // Use CryptoCompare free API (no key needed for basic endpoint)
+  const url = 'https://min-api.cryptocompare.com/data/v2/news/?lang=ES&sortOrder=latest';
+  try {
+    const r = await fetch(url);
+    const d = await r.json();
+    if(!d.Data || d.Data.length === 0) throw new Error();
+    const articles = d.Data.slice(0, 15);
+    el.innerHTML = `<div class="news-grid">${articles.map(a => {
+      const date = new Date(a.published_on * 1000).toLocaleDateString('es-AR', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+      const cats = a.categories ? a.categories.split('|').slice(0,2).filter(Boolean) : [];
+      return `<a class="news-card" href="${a.url}" target="_blank" rel="noopener">
+        <div class="news-source">${a.source_info?.name || a.source} ${cats.map(c=>`<span class="news-tag">${c}</span>`).join('')}</div>
+        <div class="news-title">${a.title}</div>
+        <div class="news-desc">${(a.body||'').slice(0,120)}…</div>
+        <div class="news-date">🕐 ${date}</div>
+      </a>`;
+    }).join('')}</div>`;
+    window._newsLoaded = true;
+  } catch(e) {
+    // Fallback: static curated links
+    el.innerHTML = `<div class="news-grid">
+      <a class="news-card" href="https://www.cryptonoticias.com" target="_blank">
+        <div class="news-source">CryptoNoticias</div>
+        <div class="news-title">Últimas noticias de criptomonedas en español</div>
+        <div class="news-desc">Portal de noticias cripto en español con análisis de mercado, Bitcoin, Ethereum y más.</div>
+      </a>
+      <a class="news-card" href="https://cointelegraph.com/es" target="_blank">
+        <div class="news-source">CoinTelegraph ES</div>
+        <div class="news-title">Noticias de blockchain y criptomonedas</div>
+        <div class="news-desc">CoinTelegraph en español, la fuente más completa de noticias del mundo cripto.</div>
+      </a>
+      <a class="news-card" href="https://es.investing.com/crypto" target="_blank">
+        <div class="news-source">Investing.com</div>
+        <div class="news-title">Mercado cripto: precios y noticias</div>
+        <div class="news-desc">Precios en tiempo real, noticias y análisis técnico del mercado de criptomonedas.</div>
+      </a>
+      <a class="news-card" href="https://www.bitget.com/es/news" target="_blank">
+        <div class="news-source">Bitget News</div>
+        <div class="news-title">Noticias oficiales de Bitget Exchange</div>
+        <div class="news-desc">Actualizaciones de listados, lanzamientos y análisis del mercado desde Bitget.</div>
+      </a>
+    </div>`;
+  }
+}
+</script>
+</body>
+</html>
